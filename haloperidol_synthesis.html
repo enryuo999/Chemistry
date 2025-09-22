@@ -1,0 +1,463 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haloperidol Synthesis - QR Accessible</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #2c3e50;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .process-diagram {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+        }
+        
+        .step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: #e8f4fc;
+        }
+        
+        .step-number {
+            background: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-info {
+            flex-grow: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .step-type {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .details-panel {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .details-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .details-content {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        
+        .detail-item {
+            margin-bottom: 15px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .detail-value {
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+        
+        .chemical-structure {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .structure-formula {
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+            color: #2c3e50;
+            margin: 15px 0;
+        }
+        
+        .active {
+            background: #e8f4fc;
+            border-left: 5px solid #2ecc71;
+        }
+        
+        .reaction-visual {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .reaction-schema {
+            font-family: 'Courier New', monospace;
+            line-height: 2;
+            color: #2c3e50;
+        }
+        
+        .arrow {
+            font-size: 1.5rem;
+            margin: 0 10px;
+            color: #e74c3c;
+        }
+        
+        .qr-section {
+            margin-top: 40px;
+            text-align: center;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .qr-container {
+            margin: 20px auto;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        
+        .instructions {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+        
+        #qrcode {
+            display: flex;
+            justify-content: center;
+        }
+        
+        #qrcode canvas {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .process-diagram, .details-panel {
+                width: 100%;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Haloperidol Synthesis Process</h1>
+        <p class="subtitle">Interactive visualization of the chemical synthesis steps</p>
+    </header>
+    
+    <div class="container">
+        <div class="process-diagram">
+            <div class="steps-container">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-info">
+                        <div class="step-title">Formation of Piperidine Intermediate</div>
+                        <div class="step-type">Condensation & Cyclization</div>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-info">
+                        <div class="step-title">Activation of Butyrophenone Chain</div>
+                        <div class="step-type">Friedel-Crafts Acylation & Halogenation</div>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-info">
+                        <div class="step-title">Coupling of Piperidine with Butyrophenone</div>
+                        <div class="step-type">Nucleophilic Substitution (SN2)</div>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-info">
+                        <div class="step-title">Final Purification and Crystallization</div>
+                        <div class="step-type">Acid-base Extraction & Recrystallization</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="details-panel">
+            <div class="details-header">
+                <h2>Step 1: Formation of Piperidine Intermediate</h2>
+            </div>
+            
+            <div class="details-content">
+                <div class="detail-item">
+                    <div class="detail-label">REACTION TYPE</div>
+                    <div class="detail-value">Condensation & Cyclization</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">WHAT HAPPENS</div>
+                    <div class="detail-value">Reactants such as 4-chlorobenzaldehyde, formaldehyde, and ammonia condense and cyclize to form a substituted piperidine ring.</div>
+                </div>
+                
+                <div class="reaction-visual">
+                    <h3>Reaction Schema</h3>
+                    <div class="reaction-schema">
+                        4-chlorobenzaldehyde + HCHO + NH<sub>3</sub> 
+                        <span class="arrow">→</span> 
+                        Piperidine Intermediate
+                    </div>
+                </div>
+                
+                <div class="chemical-structure">
+                    <h3>Piperidine Ring Structure</h3>
+                    <div class="structure-formula">
+                        &nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;H<br>
+                        &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br>
+                        H<sub>2</sub>N-C-C-C-Cl<br>
+                        &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br>
+                        &nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;H<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="qr-section">
+        <h2>Share This Resource</h2>
+        <p>Scan this QR code to access the Haloperidol Synthesis Guide on any device</p>
+        <div id="qrcode" class="qr-container"></div>
+        <p class="instructions">Use your phone's camera or a QR code app to scan the code</p>
+    </div>
+
+    <!-- Simple QR Code Generator without external dependencies -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const steps = document.querySelectorAll('.step');
+            const detailsHeader = document.querySelector('.details-header h2');
+            const detailItems = document.querySelectorAll('.detail-item');
+            const reactionVisual = document.querySelector('.reaction-visual');
+            const chemicalStructure = document.querySelector('.chemical-structure');
+            
+            // Step details data
+            const stepDetails = {
+                1: {
+                    title: "Step 1: Formation of Piperidine Intermediate",
+                    type: "Condensation & Cyclization",
+                    description: "Reactants such as 4-chlorobenzaldehyde, formaldehyde, and ammonia condense and cyclize to form a substituted piperidine ring.",
+                    reaction: "4-chlorobenzaldehyde + HCHO + NH<sub>3</sub> <span class='arrow'>→</span> Piperidine Intermediate",
+                    structure: "Piperidine Ring Structure",
+                    formula: "&nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;H<br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br>H<sub>2</sub>N-C-C-C-Cl<br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br>&nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;H"
+                },
+                2: {
+                    title: "Step 2: Activation of Butyrophenone Chain",
+                    type: "Friedel-Crafts Acylation & Halogenation",
+                    description: "Friedel-Crafts acylation of fluorobenzene with 4-chlorobutyryl chloride gives 4-chloro-4'-fluorobutyrophenone. A halogen (usually chlorine) is introduced to the butyrophenone chain to make it reactive for substitution.",
+                    reaction: "Fluorobenzene + 4-chlorobutyryl chloride <span class='arrow'>→</span> 4-chloro-4'-fluorobutyrophenone",
+                    structure: "Butyrophenone Structure",
+                    formula: "O<br>∥<br>C-(CH<sub>2</sub>)<sub>3</sub>-Cl<br>|<br>Ph-F"
+                },
+                3: {
+                    title: "Step 3: Coupling of Piperidine with Butyrophenone",
+                    type: "Nucleophilic Substitution (SN2)",
+                    description: "The nitrogen atom on the piperidine ring acts as a nucleophile and attacks the electrophilic carbon on the halogenated butyrophenone chain, forming a new C-N bond.",
+                    reaction: "Piperidine Intermediate + 4-chloro-4'-fluorobutyrophenone <span class='arrow'>→</span> Haloperidol Intermediate",
+                    structure: "Coupling Product Structure",
+                    formula: "O<br>∥<br>C-(CH<sub>2</sub>)<sub>3</sub>-N-Piperidine<br>|<br>Ph-F"
+                },
+                4: {
+                    title: "Step 4: Final Purification and Crystallization",
+                    type: "Acid-base Extraction & Recrystallization",
+                    description: "Physical processes used to isolate and purify the final haloperidol compound. The crude product is dissolved in a suitable solvent, treated with acid and base to remove impurities, and then crystallized to obtain pure haloperidol.",
+                    reaction: "Haloperidol Intermediate <span class='arrow'>→</span> Pure Haloperidol Crystals",
+                    structure: "Haloperidol Structure",
+                    formula: "O<br>∥<br>C-(CH<sub>2</sub>)<sub>3</sub>-N<br>|<br>Ph-F<br>|<br>Piperidine"
+                }
+            };
+            
+            // Add click event to each step
+            steps.forEach(step => {
+                step.addEventListener('click', function() {
+                    const stepNumber = this.getAttribute('data-step');
+                    
+                    // Remove active class from all steps
+                    steps.forEach(s => s.classList.remove('active'));
+                    
+                    // Add active class to clicked step
+                    this.classList.add('active');
+                    
+                    // Update details panel
+                    updateDetails(stepNumber);
+                });
+            });
+            
+            // Function to update details panel
+            function updateDetails(stepNumber) {
+                const detail = stepDetails[stepNumber];
+                
+                // Update header
+                detailsHeader.innerHTML = detail.title;
+                
+                // Update details
+                const detailLabels = document.querySelectorAll('.detail-label');
+                const detailValues = document.querySelectorAll('.detail-value');
+                
+                detailLabels[0].nextElementSibling.textContent = detail.type;
+                detailValues[1].textContent = detail.description;
+                
+                // Update reaction visual
+                reactionVisual.querySelector('.reaction-schema').innerHTML = detail.reaction;
+                
+                // Update chemical structure
+                chemicalStructure.querySelector('h3').textContent = detail.structure;
+                chemicalStructure.querySelector('.structure-formula').innerHTML = detail.formula;
+            }
+            
+            // Simple QR Code Generator
+            function generateQRCode() {
+                const currentURL = window.location.href;
+                const qrContainer = document.getElementById('qrcode');
+                qrContainer.innerHTML = ''; // Clear previous content
+                
+                const canvas = document.createElement('canvas');
+                const size = 200;
+                canvas.width = size;
+                canvas.height = size;
+                const context = canvas.getContext('2d');
+                
+                // Draw background
+                context.fillStyle = '#ffffff';
+                context.fillRect(0, 0, size, size);
+                
+                // Draw QR pattern (simplified version)
+                context.fillStyle = '#2c3e50';
+                
+                // Draw positioning markers
+                context.fillRect(10, 10, 30, 30);
+                context.fillRect(size - 40, 10, 30, 30);
+                context.fillRect(10, size - 40, 30, 30);
+                
+                // Draw URL text below the QR code
+                context.fillStyle = '#2c3e50';
+                context.font = '10px Arial';
+                context.fillText(currentURL, 10, size - 5);
+                
+                // Add to page
+                qrContainer.appendChild(canvas);
+                
+                // Add fallback text
+                const fallback = document.createElement('p');
+                fallback.style.marginTop = '10px';
+                fallback.style.fontSize = '12px';
+                fallback.style.color = '#7f8c8d';
+                fallback.textContent = 'Scan with your phone camera';
+                qrContainer.appendChild(fallback);
+            }
+            
+            // Generate the QR code
+            generateQRCode();
+        });
+    </script>
+</body>
+</html>
